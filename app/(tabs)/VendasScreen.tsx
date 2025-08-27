@@ -1,7 +1,7 @@
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { VendaField } from '../../components/VendaField';
 
 export default function VendasScreen() {
@@ -20,6 +20,7 @@ export default function VendasScreen() {
   });
 
   return (
+    <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.container}>
       {/* Header customizado */}
       <View style={styles.header}>:
@@ -79,14 +80,14 @@ export default function VendasScreen() {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#d3d3d3',
-    padding: 0,
     justifyContent: 'flex-start',
   },
   header: {
