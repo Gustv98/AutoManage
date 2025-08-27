@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 type Props = {
   title: string;
   onPress: () => void;
+  disabled?: boolean;
 };
 
 export default function ConfirmButton({ title, onPress }: Props) {

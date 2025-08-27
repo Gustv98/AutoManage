@@ -1,15 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-interface VendaFieldProps extends TextInputProps {
+interface VendaFieldProps {
   label: string;
+  editable?: boolean;
+  value?: string;
+  onChange?: (text: string) => void;
 }
 
-export function VendaField({ label, ...props }: VendaFieldProps) {
+export function VendaField({ label,editable=false, value, onChange }: VendaFieldProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={styles.input} editable={false} {...props} />
+      <TextInput style={styles.input} value={value} onChangeText={text=>onChange?.(text)} editable={editable} />
     </View>
   );
 }
