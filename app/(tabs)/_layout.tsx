@@ -51,11 +51,18 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => < Text>EditCarro</Text>,
         }}
       />
-      <Tabs.Screen
+     {/* <Tabs.Screen
         name="VendasScreen"
         options={{
           title: '',
           tabBarIcon: ({ color }) => < Text>Vendas</Text>,
+        }}
+        />*/}
+      <Tabs.Screen
+        name="carroDetalhes"
+        options={{
+          title: '',
+          tabBarIcon: ({ color }) => < Text>CarroDetalhes</Text>,
         }}
       />
     </Tabs>

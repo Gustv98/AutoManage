@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MenuModal from '../../components/MenuModal';
@@ -6,13 +7,14 @@ import MenuModal from '../../components/MenuModal';
 
 export default function Home({navigation}:any){
   const [menuVisible, setMenuVisible] = useState(false);
+  const router = useRouter();
 
   return(
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>AutoManage</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton} onPress={()=> router.push("/addCarro")}>
             <Text style={styles.addButtonText}>+</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuButton} onPress={() => setMenuVisible(true)}>
@@ -45,7 +47,7 @@ export default function Home({navigation}:any){
 
         <TouchableOpacity
           style={styles.eyeButton}
-          onPress={() => navigation.navigate('CarDetails')}
+          onPress={() => router.push("/carroDetalhes")}
         >
           <Text style={styles.eyeButtonText}>👁</Text>
         </TouchableOpacity>
