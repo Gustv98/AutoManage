@@ -1,13 +1,23 @@
 import React from 'react';
-import { StyleSheet, TextInput, TextInputProps } from 'react-native';
+import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
 
-export default function FormInput(props: TextInputProps) {
+interface FormInputProps extends TextInputProps {
+  errorMessage?: string;
+}
+
+export default function FormInput({errorMessage, ...props}: FormInputProps) {
   return (
-    <TextInput
-      style={styles.input}
-      placeholderTextColor="#000000ff"
-      {...props}  // permite passar outras props como placeholder, value, onChangeText, etc.
-    />
+    <View>
+      <TextInput
+        style={styles.input}
+        placeholderTextColor="#000000ff"
+        {...props}  
+      />
+      {errorMessage && (
+        <Text style={styles.error}>{errorMessage}</Text>
+      )}
+    </View>
+    
   );
 }
 
@@ -21,5 +31,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12, // espaço interno pro texto não grudar nas bordas
     fontSize: 16,
     color: '#000', // cor do texto digitado
+  },
+  error: {
+    color: 'red',
   },
 });
