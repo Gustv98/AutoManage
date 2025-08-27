@@ -1,33 +1,22 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
 
   return (
+    <SafeAreaView style={ styles.container}>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: 'light',
-        headerShown: false,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-          },
-          default: {},
-        }),
+        tabBarIcon: ({ color }) => <Text></Text>,
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: '',
-          tabBarIcon: ({ color }) => < Text>Home</Text>,
-        }}
-      />
-      <Tabs.Screen
-        name="login"
-        options={{
-          title: '',
-          tabBarIcon: ({ color }) => < Text>Login</Text>,
+          tabBarIcon: ({ color }) => <Text>Home</Text>,
         }}
       />
       <Tabs.Screen
@@ -58,6 +47,20 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => < Text>Vendas</Text>,
         }}
       />
+      <Tabs.Screen
+        name="cadVendas"
+        options={{
+          title: '',
+          tabBarIcon: ({ color }) => < Text>AddVendas</Text>,
+        }}
+      />
     </Tabs>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
