@@ -1,4 +1,5 @@
 import { Label } from '@react-navigation/elements';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
@@ -30,25 +31,33 @@ export default function VendaForm() {
   const [errors, setErrors] = useState(null);
 
   const handleSubmit = async () => {
-    try {
-      await vendaSchema.validate(venda, { abortEarly: false });
-      // Se a validação for bem-sucedida, envie os dados para o servidor
-      fetch('  ', { // Aqui vai API
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(venda),
-      }).then(response => response.json()).catch(data => console.log(data));
-    } catch (err) {
+  try {
+    await vendaSchema.validate(venda, { abortEarly: false });
+    // Se a validação for bem-sucedida, envie os dados para o servidor
+    const response = await axios.post('', venda, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response.data);
+  } catch (error) {
+    if (error.response) {
+      // Erro do servidor
+      console.log(error.response.data);
+    } else if (error.request) {
+      // Erro de rede
+      console.log(error.request);
+    } else {
+      // Erro de validação
       const errors = {};
-      err.inner.forEach(error => {
+      error.inner.forEach(error => {
         errors[error.path] = error.message;
       });
       setErrors(errors);
       Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios');
     }
-  };
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
