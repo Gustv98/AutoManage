@@ -1,38 +1,30 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 
-type Props = {
-  title: string;
-  onPress: () => void;
-  disabled?: boolean;
-};
-
-export default function ConfirmButton({ title, onPress }: Props) {
+export default function ConfirmButton({ onPress }: { onPress: () => void }) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.buttonText}>CONFIRMAR</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#00C400", // verde
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 40, // deixa bem arredondado
-    alignItems: "center",
-    justifyContent: "center",
-    width: 256,
-    height: 45,
+    width: '90%',
+    height: 50,
+    backgroundColor: '#34d399',
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? 40 : 20, // distância da borda inferior
+    alignSelf: 'center',
+    zIndex: 10,
   },
-  text: {
-    color: "#000",
-    fontSize: 14,
-    fontWeight: "500",
+  buttonText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
-
-
-/* Botão */
-
