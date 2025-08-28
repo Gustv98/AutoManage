@@ -74,7 +74,7 @@ export default function AddCarro() {
     }
 
     try {
-      const response = await fetch("https://sua-api.com/veiculos", {
+      const response = await fetch("", {
         method: "POST",
         body: formData,
         headers: { "Content-Type": "multipart/form-data" },

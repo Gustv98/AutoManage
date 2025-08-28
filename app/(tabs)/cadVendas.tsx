@@ -96,8 +96,11 @@ const handleSubmit = async () => {
       errorMessage={errors?.vendedor}/>
       <FormInput placeholder="Endereço:" value={venda?.endereco} onChangeText={text=>setVenda({...venda, endereco: text})}
       errorMessage={errors?.endereco}/>
-      <FormInput placeholder="Data da Venda:" value={venda?.dataVenda} onChangeText={text=>setVenda({...venda, dataVenda: text})}
+      
+      <FormInput placeholder="Data da Venda:" value={venda?.dataVenda} 
+      onChangeText={text=>setVenda({...venda, dataVenda: text})}
       errorMessage={errors?.dataVenda}/>
+      
       <FormInput placeholder="Placa do Veículo:" value={venda?.placa} onChangeText={text=>setVenda({...venda, placa: text})}
       errorMessage={errors?.placa}/>
       <FormInput placeholder="Modelo:" value={venda?.modelo} onChangeText={text=>setVenda({...venda, modelo: text})}
