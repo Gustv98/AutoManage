@@ -70,6 +70,14 @@ export default function TabLayout() {
         options={{
           title: 'Lista de Vendas',
           tabBarIcon: ({ color }) => <FontAwesome name="list" size={24} color={color} />
+
+        }}
+      />
+      <Tabs.Screen
+        name="listClientes"
+        options={{
+          title: 'Clientes',
+          tabBarIcon: ({ color }) => <FontAwesome name="users" size={24} color={color} />
         }}
         
       />

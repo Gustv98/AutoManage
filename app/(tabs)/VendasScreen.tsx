@@ -24,19 +24,19 @@ export default function VendasScreen() {
 
   useEffect(() => {
     console.log(id);
-    axios.get(`https://us-central1-automanage-2db06.cloudfunctions.net/api/vendas/${id}`).
+    axios.get(`/////////////${id}`).
     then((response) => {setVenda(response.data); console.log(response.data)});
   }, [id]);
 
   const handleEdit = () => {
-    axios.put(`https://us-central1-automanage-2db06.cloudfunctions.net/api/vendas/${id}`, venda).then((response) => {
+    axios.put(`/////////////${id}`, venda).then((response) => {
       console.log(response.data);
       router.push("/listVendas" as any);
     })
   };
 
   const handleDelete = () => {
-    axios.delete(`https://us-central1-automanage-2db06.cloudfunctions.net/api/vendas/${id}`).then((response) => {
+    axios.delete(`//////////////////${id}`).then((response) => {
       console.log(response.data);
       router.push("/listVendas" as any);
     })
