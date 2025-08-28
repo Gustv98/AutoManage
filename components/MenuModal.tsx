@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -9,6 +10,7 @@ interface MenuModalProps {
 
 export default function MenuModal({ visible, onClose }: MenuModalProps) {
   if (!visible) return null;
+  const router = useRouter();
 
   return (
     <View style={styles.menuOverlay}>
@@ -19,13 +21,13 @@ export default function MenuModal({ visible, onClose }: MenuModalProps) {
             <FontAwesome name="close" size={32} color="#fff" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.menuOption}>
+        <TouchableOpacity style={styles.menuOption} onPress={()=> router.push("/VendasScreen")}>
           <Text style={styles.menuOptionText}>VENDAS</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuOption}>
+        <TouchableOpacity style={styles.menuOption} onPress={()=> router.push("/ClientesScreen")}>
           <Text style={styles.menuOptionText}>CLIENTES</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuOption}>
+        <TouchableOpacity style={styles.menuOption} >
           <Text style={styles.menuOptionText}>LOGOUT</Text>
         </TouchableOpacity>
       </View>
