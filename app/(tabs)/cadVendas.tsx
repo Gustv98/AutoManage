@@ -1,7 +1,7 @@
 import { Label } from '@react-navigation/elements';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet } from 'react-native';
+import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 import ConfirmButton from '../../components/ConfirmButton';
 import FormInput from '../../components/FormInput';
@@ -10,8 +10,8 @@ const vendaSchema = Yup.object().shape({
   comprador: Yup.string().required('Comprador é obrigatório'),
   vendedor: Yup.string().required('Vendedor é obrigatório'),
   endereco: Yup.string().required('Endereço é obrigatório'),
-  dataVenda: Yup.string().required('Data da Venda é obrigatória'),
-  placa: Yup.string().required('Placa do Veículo é obrigatória'),
+  dataVenda: Yup.string().required('Data da Venda é obrigatória').matches(/^\d{2}\/\d{2}\/\d{4}$/, 'Data inválida'),
+  placa: Yup.string().required('Placa do Veículo é obrigatória').matches(/^[A-Z]{3}-\d{4]$/, 'Placa inválida'),
   modelo: Yup.string().required('Modelo é obrigatório'),
   pagamento: Yup.string().required('Pagamento é obrigatório'),
   comissao: Yup.string().required('Valor da Comissão é obrigatório'),
@@ -30,37 +30,65 @@ export default function VendaForm() {
   });
   const [errors, setErrors] = useState(null);
 
-  const handleSubmit = async () => {
+  const [loading, setLoading] = useState(false); // Estado de carregamento
+
+const handleSubmit = async () => {
+  setLoading(true); // Inicia o carregamento
   try {
     await vendaSchema.validate(venda, { abortEarly: false });
+    
     // Se a validação for bem-sucedida, envie os dados para o servidor
     const response = await axios.post('', venda, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    
     console.log(response.data);
+    
+    // Mensagem de sucesso
+    Alert.alert(
+      'Sucesso!', 
+      'Venda cadastrada com sucesso!',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            // Opcional: limpar o formulário ou navegar para outra tela
+          }
+        }
+      ]
+    );
+    
   } catch (error) {
     if (error.response) {
       // Erro do servidor
       console.log(error.response.data);
+      Alert.alert('Erro', 'O servidor retornou um erro: ' + error.response.data.message);
     } else if (error.request) {
       // Erro de rede
       console.log(error.request);
-    } else {
-      // Erro de validação
+      Alert.alert('Erro de Conexão', 'Não foi possível conectar ao servidor. Verifique sua internet.');
+    } else if (error.name === 'ValidationError') {
+      // Erro de validação do Yup
       const errors = {};
-      error.inner.forEach(error => {
-        errors[error.path] = error.message;
+      error.inner.forEach(err => {
+        errors[err.path] = err.message;
       });
       setErrors(errors);
-      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios');
+      Alert.alert('Erro de Validação', 'Por favor, preencha todos os campos obrigatórios corretamente.');
+    } else {
+      // Outros erros
+      console.log('Error', error.message);
+      Alert.alert('Erro', 'Ocorreu um erro inesperado: ' + error.message);
     }
+  } finally {
+    setLoading(false); // Finaliza o carregamento
   }
 };
-
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+
+    <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={50} style={styles.container}>
       <Label style={styles.title}>Cadastrar Venda</Label>
       <FormInput placeholder="Comprador:" value={venda?.comprador} onChangeText={text => setVenda({ ...venda, comprador: text })} 
       errorMessage={errors?.comprador}/>
@@ -79,8 +107,13 @@ export default function VendaForm() {
       <FormInput placeholder="Valor da Comissão:" value={venda?.comissao} onChangeText={text=> setVenda({...venda, comissao: text})}
       errorMessage={errors?.comissao}/>
 
-      <ConfirmButton title="Confirmar" onPress={handleSubmit} />
-    </ScrollView>
+      <ConfirmButton 
+      title={loading ? "Enviando..." : "Confirmar"} 
+      onPress={handleSubmit}
+      disabled={loading}
+      />
+      
+    </KeyboardAvoidingView>
   );
 }
 
