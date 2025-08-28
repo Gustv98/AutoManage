@@ -38,7 +38,7 @@ const handleSubmit = async () => {
     await vendaSchema.validate(venda, { abortEarly: false });
     
     // Se a validação for bem-sucedida, envie os dados para o servidor
-    const response = await axios.post('', venda, {
+    const response = await axios.post('https://us-central1-automanage-2db06.cloudfunctions.net/api/vendas', venda, {
       headers: {
         'Content-Type': 'application/json',
       },

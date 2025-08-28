@@ -73,14 +73,6 @@ export default function TabLayout() {
 
         }}
       />
-      <Tabs.Screen
-        name="listClientes"
-        options={{
-          title: 'Clientes',
-          tabBarIcon: ({ color }) => <FontAwesome name="users" size={24} color={color} />
-        }}
-        
-      />
     </Tabs>
     </SafeAreaView>
   );
